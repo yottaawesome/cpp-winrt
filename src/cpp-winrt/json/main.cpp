@@ -4,12 +4,13 @@
 
 import <iostream>;
 
+// https://docs.microsoft.com/en-us/uwp/api/windows.data.json?view=winrt-22621
 namespace JSON = winrt::Windows::Data::Json;
 
 int main()
 {
     JSON::JsonObject root;
-    JSON::JsonArray array1;
+    JSON::JsonArray arrayValue;
 
     for (int i = 0; i < 5; i++)
     {
@@ -19,10 +20,10 @@ int main()
         internalArray.Append(JSON::JsonValue::CreateNumberValue(2));
         internalArray.Append(JSON::JsonValue::CreateNumberValue(3));
 
-        array1.Append(internalArray);
+        arrayValue.Append(internalArray);
     }
 
-    root.SetNamedValue(L"values", array1);
+    root.SetNamedValue(L"values", arrayValue);
 
     std::wcout << root.ToString().c_str() << std::endl;
 
