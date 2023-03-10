@@ -1,4 +1,7 @@
 // See also: https://learn.microsoft.com/en-us/windows/uwp/networking/sockets#references-to-streamsockets-in-c-ppl-continuations
+// Run the stream-socket-server project first; 
+// this application will connect to that app's
+// socket.
 
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.foundation.collections.h>
@@ -30,9 +33,17 @@ int main()
                 std::wcout << L"Received a socket connection...\n";
                 Sockets::StreamSocket socket{ args.Socket() };
                 Streams::DataReader reader{ socket.InputStream() };
+                
                 int bytes = reader.LoadAsync(sizeof(unsigned int)).get();
-                int data = reader.ReadInt32();
-                std::wcout << std::format(L"Read {} bytes: {}\n", bytes, data);
+                int stringLength = reader.ReadInt32();
+                bytes = reader.LoadAsync(stringLength).get();
+                std::wstring clientMsg{ reader.ReadString(stringLength) };
+                
+                std::wcout << std::format(
+                    L"Read {} bytes from client: {}\n", 
+                    bytes, 
+                    clientMsg
+                );
             }
             catch (const winrt::hresult_error& ex)
             {
@@ -44,6 +55,7 @@ int main()
     std::wcout << L"Waiting for connection...\n";
     async.get();
     
+    // This is just here 
     std::wstring x;
     std::wcin >> x;
 

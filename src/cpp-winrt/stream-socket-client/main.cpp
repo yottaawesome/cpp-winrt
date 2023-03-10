@@ -1,4 +1,7 @@
 // See also: https://learn.microsoft.com/en-us/windows/uwp/networking/sockets#references-to-streamsockets-in-c-ppl-continuations
+// Run the stream-socket-server project first; 
+// this application will connect to that app's
+// socket.
 
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.foundation.collections.h>
@@ -28,10 +31,17 @@ int main()
         async.get();
 
         Streams::DataWriter dw(ss.OutputStream());
-        dw.WriteUInt32(32);
+        std::wcout << (L"Enter a string to send to the server...\n");
+        std::wstring output;
+        std::getline(std::wcin, output);
+
+        dw.WriteUInt32(output.size());
+        dw.WriteString(output);
         dw.StoreAsync().get();
         dw.FlushAsync().get();
-        dw.DetachStream();
+        // Some sample code on MSDN also detach 
+        // the stream, but this is probably not 
+        // necessary.
         
         ss.Close();
     }
