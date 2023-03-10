@@ -8,32 +8,13 @@
 import <iostream>;
 import <format>;
 
-namespace Sockets = winrt::Windows::Networking::Sockets;
-namespace Networking = winrt::Windows::Networking;
-
-void OnConnectionReceived(
-    winrt::Windows::Networking::Sockets::StreamSocketListener /* sender */, 
-    winrt::Windows::Networking::Sockets::StreamSocketListenerConnectionReceivedEventArgs args
-)
-{
-    try
-    {
-        std::wcout << L"Hello" << std::endl;
-        auto socket{ args.Socket() };
-        winrt::Windows::Storage::Streams::DataReader dr{ socket.InputStream() };
-        int bytes = dr.LoadAsync(sizeof(unsigned int)).get();
-        std::wcout << bytes << std::endl;
-        int data = dr.ReadInt32();
-        std::wcout << data << std::endl;
-    }
-    catch (const winrt::hresult_error& ex)
-    {
-        std::wcerr << std::format(L"Error: {}\n", ex.message());
-    }
-}
-
 int main()
 {
+    namespace Sockets = winrt::Windows::Networking::Sockets;
+    namespace Networking = winrt::Windows::Networking;
+    namespace Streams = winrt::Windows::Storage::Streams;
+    namespace Foundation = winrt::Windows::Foundation;
+
     winrt::init_apartment();
 
     Sockets::StreamSocketListener ssl;
@@ -45,13 +26,12 @@ int main()
         {
             try
             {
-                std::wcout << L"Hello" << std::endl;
-                auto socket{ args.Socket() };
-                winrt::Windows::Storage::Streams::DataReader dr{ socket.InputStream() };
-                int bytes = dr.LoadAsync(sizeof(unsigned int)).get();
-                std::wcout << bytes << std::endl;
-                int data = dr.ReadInt32();
-                std::wcout << data << std::endl;
+                std::wcout << L"Received a socket connection...\n";
+                Sockets::StreamSocket socket{ args.Socket() };
+                Streams::DataReader reader{ socket.InputStream() };
+                int bytes = reader.LoadAsync(sizeof(unsigned int)).get();
+                int data = reader.ReadInt32();
+                std::wcout << std::format(L"Read {} bytes: {}\n", bytes, data);
             }
             catch (const winrt::hresult_error& ex)
             {
@@ -59,13 +39,12 @@ int main()
             }
         });
     
-    winrt::Windows::Foundation::IAsyncAction async = ssl.BindServiceNameAsync(L"59725");
+    Foundation::IAsyncAction async = ssl.BindServiceNameAsync(L"59725");
+    std::wcout << L"Waiting for connection...\n";
     async.get();
     
-    while (true)
-    {
-        Sleep(1000);
-    }
+    std::wstring x;
+    std::wcin >> x;
 
     return 0;
 }

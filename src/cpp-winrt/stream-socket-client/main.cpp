@@ -6,15 +6,17 @@
 #include <winrt/windows.storage.streams.h>
 
 import <iostream>;
+import <format>;
 
 int main()
 {
+    namespace Sockets = winrt::Windows::Networking::Sockets;
+    namespace Networking = winrt::Windows::Networking;
+    namespace Streams = winrt::Windows::Storage::Streams;
+
     try
     {
         winrt::init_apartment();
-
-        namespace Sockets = winrt::Windows::Networking::Sockets;
-        namespace Networking = winrt::Windows::Networking;
 
         Sockets::StreamSocket ss;
         winrt::Windows::Foundation::IAsyncAction async = ss.ConnectAsync(
@@ -22,32 +24,19 @@ int main()
             L"59725", 
             Sockets::SocketProtectionLevel::PlainSocket
         );
-
         async.get();
-        Sleep(1000);
 
-        winrt::Windows::Storage::Streams::DataWriter dw(ss.OutputStream());
-        //dw.WriteString(L"Test");
+        Streams::DataWriter dw(ss.OutputStream());
         dw.WriteUInt32(32);
-        dw.WriteUInt32(32);
-        dw.WriteUInt32(32);
-        dw.WriteUInt32(6);
         dw.StoreAsync().get();
         dw.FlushAsync().get();
         dw.DetachStream();
-        //winrt::Windows::Storage::Streams::DataReader dr{ ss.InputStream() };
-
-
-        /*while (true)
-        {
-            Sleep(1000);
-        }*/
-
+        
         ss.Close();
     }
-    catch (...)
+    catch (const winrt::hresult_error& ex)
     {
-        std::wcout << L"Error\n";
+        std::wcerr << std::format(L"Error: {}\n", ex.message());
     }
 
     return 0;
