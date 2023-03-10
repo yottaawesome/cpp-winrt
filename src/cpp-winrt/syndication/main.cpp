@@ -1,5 +1,6 @@
 // Adapted from https://learn.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/get-started
 
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Web.Syndication.h>
 
