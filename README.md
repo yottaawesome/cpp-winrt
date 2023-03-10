@@ -2,8 +2,12 @@
 
 ## Introduction
 
-This will house samples for C++/WinRT to allow me to familiarise myself with this technology.
+This repo house samples I've developed for familiarising myself with C++/WinRT. C++/WinRT is a modern C++ language projection over the Windows Runtime APIs.
 
 ## Building
 
+You need Visual Studio 2022 with the _Desktop development with C++_ and the _Universal Windows Platform_ development workloads installed. Make sure the _C++/WinRT_ option under _SDKs, libraries, and frameworks_ in Visual Studio Installer is selected.
+
 ## Additional Resources
+
+* [C++/WinRT on MSDN](https://learn.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/)
