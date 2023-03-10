@@ -32,15 +32,16 @@ int main()
         dw.WriteUInt32(32);
         dw.WriteUInt32(32);
         dw.WriteUInt32(6);
+        dw.StoreAsync().get();
         dw.FlushAsync().get();
+        dw.DetachStream();
+        //winrt::Windows::Storage::Streams::DataReader dr{ ss.InputStream() };
 
-        winrt::Windows::Storage::Streams::DataReader dr{ ss.InputStream() };
 
-
-        while (true)
+        /*while (true)
         {
             Sleep(1000);
-        }
+        }*/
 
         ss.Close();
     }

@@ -24,8 +24,6 @@ void OnConnectionReceived(
         int bytes = dr.LoadAsync(sizeof(unsigned int)).get();
         std::wcout << bytes << std::endl;
         int data = dr.ReadInt32();
-        std::wcout << L"2" << std::endl;
-        //winrt::hstring hs = dr.ReadLi(2);
         std::wcout << data << std::endl;
     }
     catch (const winrt::hresult_error& ex)
@@ -39,7 +37,27 @@ int main()
     winrt::init_apartment();
 
     Sockets::StreamSocketListener ssl;
-    ssl.ConnectionReceived(&OnConnectionReceived);
+    ssl.ConnectionReceived(
+        [](
+            const Sockets::StreamSocketListener& /* sender */,
+            const Sockets::StreamSocketListenerConnectionReceivedEventArgs& args
+        )
+        {
+            try
+            {
+                std::wcout << L"Hello" << std::endl;
+                auto socket{ args.Socket() };
+                winrt::Windows::Storage::Streams::DataReader dr{ socket.InputStream() };
+                int bytes = dr.LoadAsync(sizeof(unsigned int)).get();
+                std::wcout << bytes << std::endl;
+                int data = dr.ReadInt32();
+                std::wcout << data << std::endl;
+            }
+            catch (const winrt::hresult_error& ex)
+            {
+                std::wcerr << std::format(L"Error: {}\n", ex.message());
+            }
+        });
     
     winrt::Windows::Foundation::IAsyncAction async = ssl.BindServiceNameAsync(L"59725");
     async.get();

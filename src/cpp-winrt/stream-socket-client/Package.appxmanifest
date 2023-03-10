@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	This was added because I couldn't get the sockets communicating.
+	It turns out this file is not actually necessary for non-UWP apps.
+-->
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
   <Identity Name="MyCompany.MySuite.MyApp" 
             Version="1.0.0.0" 
@@ -18,13 +22,4 @@
 	<Capabilities>
 		<Capability Name="privateNetworkClientServer" />
 	</Capabilities>
-  <!--<Applications>
-    <Application Id="" StartPage="">
-      <VisualElements DisplayName="" Description=""
-           Logo="" SmallLogo=""  
-           ForegroundText="" BackgroundColor="">
-         <SplashScreen Image="" />
-      </VisualElements>
-    </Application>
-  </Applications>-->
 </Package>
