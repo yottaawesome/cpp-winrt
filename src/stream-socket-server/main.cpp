@@ -55,7 +55,7 @@ int main()
     std::wcout << L"Waiting for connection...\n";
     async.get();
     
-    // This is just here 
+    // This is just here to prevent the app from terminating
     std::wstring x;
     std::wcin >> x;
 
