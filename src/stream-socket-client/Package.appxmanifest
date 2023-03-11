@@ -2,6 +2,8 @@
 <!-- 
 	This was added because I couldn't get the sockets communicating.
 	It turns out this file is not actually necessary for non-UWP apps.
+	https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/how-to-create-a-basic-package-manifest
+	https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/how-to-specify-capabilities-in-a-package-manifest
 -->
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
   <Identity Name="MyCompany.MySuite.MyApp" 
