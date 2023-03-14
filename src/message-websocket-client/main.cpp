@@ -1,3 +1,4 @@
+// See https://learn.microsoft.com/en-us/windows/uwp/networking/websockets
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.foundation.collections.h>
 #include <winrt/windows.networking.sockets.h>
@@ -19,6 +20,7 @@ int main() try
 
     Sockets::MessageWebSocket mws;
     // This lambda gets invoked whenever we received a message.
+    // You should technically also subscribe to the Closed() event.
     mws.MessageReceived(
         [&messages](
             const Sockets::MessageWebSocket& /* sender */,
@@ -52,7 +54,7 @@ int main() try
             }
         }
     );
-
+    
     // You would typically co_await this, but the standard defines that main
     // cannot be a coroutine, so we can't do that here.
     auto operation = mws.ConnectAsync(
