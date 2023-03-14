@@ -10,12 +10,12 @@ You need Visual Studio 2022 with the _Desktop development with C++_ and the _Uni
 
 ## Samples
 
-* json: shows basic JSON manipulation;
-* message-websocket-client: a websocket client that echoes out to the `echo.websocket.events` service;
-* message-websocket-server: work-in-progress, not yet implemented;
-* stream-websocket-client: a TCP stream socket client that works with `stream-websocket-server`;
-* stream-websocket-server: a TCP stream socket server that works with `stream-websocket-client`;
-* syndication: basic syndication sample provided by MSDN.
+* `json`: shows basic JSON manipulation;
+* `message-websocket-client`: a websocket client that echoes out to the `echo.websocket.events` service;
+* `message-websocket-server`: work-in-progress, not yet implemented;
+* `stream-websocket-client`: a TCP stream socket client that works with `stream-websocket-server`;
+* `stream-websocket-server`: a TCP stream socket server that works with `stream-websocket-client`;
+* `syndication`: basic syndication sample provided by MSDN.
 
 ## Additional Resources
 
