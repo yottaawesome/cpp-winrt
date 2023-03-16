@@ -1,4 +1,5 @@
-﻿#include "pch.h"
+﻿// https://learn.microsoft.com/en-us/windows/uwp/get-started/create-a-basic-windows-10-app-in-cppwinrt
+#include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
 
