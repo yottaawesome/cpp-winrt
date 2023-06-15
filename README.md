@@ -16,6 +16,8 @@ You need Visual Studio 2022 with the _Desktop development with C++_ and the _Uni
 * `stream-websocket-client`: a TCP stream socket client that works with `stream-websocket-server`;
 * `stream-websocket-server`: a TCP stream socket server that works with `stream-websocket-client`;
 * `syndication`: basic syndication sample provided by MSDN.
+* `hello-world`: Universal Windows MSDN sample.
+* `http-client`: demonstrates use of the `HttpClient` class.
 
 ## Additional Resources
 
