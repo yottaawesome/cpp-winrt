@@ -97,6 +97,12 @@ void Blah()
     (Eval(b), ...);
 }
 
+template<typename...Args>
+void Blah3(Args&&...b) requires std::is_same_v<Args..., bool>
+{
+    (Eval(b), ...);
+}
+
 struct P
 {
     
@@ -108,12 +114,46 @@ void Blah2()
     
 }
 
+JSON::IJsonValue GetValueByPath(JSON::JsonObject& root, const std::vector<std::wstring>& path)
+{
+    if (path.size() == 1)
+    {
+        if (root.HasKey(path[0]))
+            root.GetNamedValue(path[0]);
+        return nullptr;
+    }
+
+    JSON::JsonObject current = root;
+    for (const std::wstring& entry : path)
+    {
+        if (current.HasKey(entry))
+        {
+            if (current.GetNamedValue(entry).ValueType() == JSON::JsonValueType::Object)
+            {
+                current = root.GetNamedObject(entry);
+            }
+            else
+            {
+                return current.GetNamedValue(entry);
+            }
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+
+    return current;
+}
+
 void Two() try
 {
     Blah<false, true>();
 
     constexpr std::wstring_view json = LR"({"field1":{"innerField":1},"field2":{"innerField":2},"field/field":false})";
     JSON::JsonObject root = JSON::JsonObject::Parse(json.data());
+
+    GetValueByPath(root, { L"field1", L"innerField" });
 
     // this works
     std::wcout << root.GetNamedBoolean(L"field/field") << std::endl;
