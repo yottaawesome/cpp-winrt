@@ -59,37 +59,76 @@ struct X
     JSON::JsonValueType Type;
 };
 
-template<JSON::JsonValueType Type>
-auto JSONValueToValue(const JSON::IJsonValue& value)
+
+void JSONValueToValue(const JSON::IJsonValue& value, std::wstring& out)
 {
-    if constexpr (Type == JSON::JsonValueType::Array)
+    switch (value.ValueType())
     {
-        return L"NotSupported";
-
+        case JSON::JsonValueType::Array:
+            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(L"(array)"));
+            return;
+        case JSON::JsonValueType::Boolean:
+            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(value.GetBoolean()));
+            return;
+        case JSON::JsonValueType::Null:
+            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(L"(null)"));
+            return;
+        case JSON::JsonValueType::Number:
+            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(value.GetNumber()));
+            return;
+        case JSON::JsonValueType::Object:
+            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(L"(object)"));
+            return;
+        case JSON::JsonValueType::String:
+            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(std::wstring(value.GetString())));
+            return;
     }
-    else
-    {
-        return L"Unknown";
+    std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(L"(unknown)"));
+}
 
-    }
+void Eval(const bool b)
+{
+
+}
+
+template<bool...b>
+void Blah()
+{
+    (Eval(b), ...);
+}
+
+struct P
+{
+    
+};
+
+template<P...b>
+void Blah2()
+{
+    
 }
 
 void Two() try
 {
+    Blah<false, true>();
+
     constexpr std::wstring_view json = LR"({"field1":{"innerField":1},"field2":{"innerField":2},"field/field":false})";
     JSON::JsonObject root = JSON::JsonObject::Parse(json.data());
 
     // this works
     std::wcout << root.GetNamedBoolean(L"field/field") << std::endl;
 
-
     for (const IKeyValuePair& f : root)
     {
+        std::wstring out = L"";
+        JSONValueToValue(f.Value(), out);
+
         //JSONValueToValue<JSON::JsonValueType::Array>(f.Value());
         std::wcout << std::format(
-            L"Name: {} -- Type: {} -- Value: \n", 
+            L"Name: {} -- Type: {} -- Value: {}\n", 
             f.Key(), 
-            TypeToString(f.Value().ValueType())
+            TypeToString(f.Value().ValueType()),
+            out
         );
     }
 
