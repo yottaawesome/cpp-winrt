@@ -6,9 +6,13 @@ module;
 #include <winrt/windows.data.json.h>
 
 export module testmodule;
+//export import <string>;
 //export import <memory>;
+//import <memory>;
 
 namespace WinRTJSON = winrt::Windows::Data::Json;
+
+//using ::memcpy_s;
 
 // Can't be namespaced
 export

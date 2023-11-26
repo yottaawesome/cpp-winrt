@@ -12,6 +12,8 @@ import testmodule;
 // https://docs.microsoft.com/en-us/uwp/api/windows.data.json?view=winrt-22621
 //using namespace JSON;//winrt::Windows::Data::Json;
 
+//using ::memcpy_s;
+
 void One()
 {
     JSON::JsonObject root;
