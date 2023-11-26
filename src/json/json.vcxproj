@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="testmodule.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\module-header\module-header.vcxproj">

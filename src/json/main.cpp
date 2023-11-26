@@ -1,13 +1,16 @@
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/windows.data.json.h>
+//#include <winrt/Windows.Foundation.h>
+//#include <winrt/Windows.Foundation.Collections.h>
+//#include <winrt/windows.data.json.h>
 
+#include <memory> // memcpy_s not defined error when using modules
+//import <memory>;
 import <iostream>;
 import <random>;
 import <format>;
+import testmodule;
 
 // https://docs.microsoft.com/en-us/uwp/api/windows.data.json?view=winrt-22621
-namespace JSON = winrt::Windows::Data::Json;
+//using namespace JSON;//winrt::Windows::Data::Json;
 
 void One()
 {
@@ -32,7 +35,7 @@ void One()
     std::wcout << root.ToString().c_str() << std::endl;
 }
 
-using IKeyValuePair = winrt::Windows::Foundation::Collections::IKeyValuePair<winrt::hstring, JSON::IJsonValue>;
+//using IKeyValuePair = Collections::IKeyValuePair;
 
 std::wstring TypeToString(const JSON::JsonValueType& value)
 {
@@ -158,22 +161,22 @@ void Two() try
     // this works
     std::wcout << root.GetNamedBoolean(L"field/field") << std::endl;
 
-    for (const IKeyValuePair& f : root)
+    for (const Collections::IKeyValuePair& f : root)
     {
         std::wstring out = L"";
         JSONValueToValue(f.Value(), out);
 
-        //JSONValueToValue<JSON::JsonValueType::Array>(f.Value());
+        //JSONValueToValue<JsonValueType::Array>(f.Value());
         std::wcout << std::format(
             L"Name: {} -- Type: {} -- Value: {}\n", 
-            f.Key(), 
+            std::wstring{ f.Key() },
             TypeToString(f.Value().ValueType()),
             out
         );
     }
 
 }
-catch (const winrt::hresult_error& err)
+catch (const JSON::hresult_error& err)
 {
     std::wcout << std::wstring{err.message()} << std::endl;
 }
