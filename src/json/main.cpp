@@ -2,6 +2,7 @@
 //#include <winrt/Windows.Foundation.Collections.h>
 //#include <winrt/windows.data.json.h>
 
+// See https://developercommunity.visualstudio.com/t/Modules-exporting-CWinRT-objects-enco/10527223
 #include <memory> // memcpy_s not defined error when using modules
 //import <memory>;
 import <iostream>;
