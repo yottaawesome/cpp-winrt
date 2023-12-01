@@ -4,11 +4,15 @@
 #include <winrt/windows.networking.sockets.h>
 #include <winrt/windows.storage.h>
 #include <winrt/windows.storage.streams.h>
+#include <chrono> // https://github.com/microsoft/STL/issues/3992
+#include <semaphore>
+#include <iostream>
+#include <format>
 
-import <iostream>;
-import <chrono>;
-import <semaphore>;
-import <format>;
+//import <iostream>;
+//import <chrono>;
+//import <semaphore>;
+//import <format>;
 
 int main() try
 {
@@ -71,7 +75,7 @@ int main() try
     dw.FlushAsync().get();
 
     // We expect the initial banner message and then actual echo.
-    if (!messages.try_acquire_for(std::chrono::seconds(5)))
+    if (!messages.try_acquire_for(std::chrono::seconds{ 5 }))
     {
         std::wcerr << L"Timed out waiting for initial message.\n";
         return 1;

@@ -21,5 +21,8 @@
     <ClCompile Include="json.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="json2.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
