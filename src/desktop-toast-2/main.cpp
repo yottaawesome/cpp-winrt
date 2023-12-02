@@ -1,3 +1,4 @@
+// Adapted from https://gist.github.com/kennykerr/d983767262118ae0366ef1ec282e428a
 #pragma comment(lib, "onecore")
 #pragma comment(lib, "propsys")
 
