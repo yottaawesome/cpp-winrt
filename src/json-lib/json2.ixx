@@ -34,7 +34,6 @@ export namespace JSON
 	template<typename...Types>
 	struct BasicValue
 	{
-		std::optional<std::wstring> Name;
 		std::variant<Types...> Value;
 
 		auto operator=(OneOf<Types...> auto&& value) noexcept(std::is_nothrow_assignable_v<decltype(value), std::variant<Types...>>)
@@ -61,9 +60,11 @@ export namespace JSON
 	struct JSONObject;
 	using JSONValue = BasicValue<double, std::wstring, JSONObject, std::vector<JSONObject>, std::nullptr_t>;
 
+	using JSONField = std::pair<std::wstring, JSONValue>;
+
 	struct JSONObject
 	{
-		std::vector<JSONValue> Value;
+		std::vector<JSONField> Value;
 	};
 }
 
