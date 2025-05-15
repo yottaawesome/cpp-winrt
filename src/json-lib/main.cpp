@@ -1,7 +1,5 @@
+import std; // blocked by compiler bugs with redefinitions
 import json2;
-#include <string>
-#include <variant>
-//import std; // blocked by compiler bugs with redefinitions
 
 int main()
 {

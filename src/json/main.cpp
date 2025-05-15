@@ -1,45 +1,8 @@
-//#include <winrt/Windows.Foundation.h>
-//#include <winrt/Windows.Foundation.Collections.h>
-//#include <winrt/windows.data.json.h>
 
-// See https://developercommunity.visualstudio.com/t/Modules-exporting-CWinRT-objects-enco/10527223
-#include <memory> // memcpy_s not defined error when using modules
-//import <memory>;
-import <iostream>;
-import <random>;
-import <format>;
+import std;
 import testmodule;
 
 // https://docs.microsoft.com/en-us/uwp/api/windows.data.json?view=winrt-22621
-//using namespace JSON;//winrt::Windows::Data::Json;
-
-//using ::memcpy_s;
-
-void One()
-{
-    JSON::JsonObject root;
-    JSON::JsonArray arrayValue;
-
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 6); // distribution in range [1, 6]
-
-    for (int i = 0; i < 5; i++)
-    {
-        JSON::JsonArray internalArray;
-        for (int j = 0; j < 3; j++)
-            internalArray.Append(JSON::JsonValue::CreateNumberValue(dist6(rng)));
-
-        arrayValue.Append(internalArray);
-    }
-
-    root.SetNamedValue(L"values", arrayValue);
-
-    std::wcout << root.ToString().c_str() << std::endl;
-}
-
-//using IKeyValuePair = Collections::IKeyValuePair;
-
 std::wstring TypeToString(const JSON::JsonValueType& value)
 {
     switch (value)
@@ -58,66 +21,6 @@ std::wstring TypeToString(const JSON::JsonValueType& value)
             return L"String";
     }
     return L"Unknown";
-}
-
-struct X
-{
-    JSON::JsonValueType Type;
-};
-
-
-void JSONValueToValue(const JSON::IJsonValue& value, std::wstring& out)
-{
-    switch (value.ValueType())
-    {
-        case JSON::JsonValueType::Array:
-            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(L"(array)"));
-            return;
-        case JSON::JsonValueType::Boolean:
-            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(value.GetBoolean()));
-            return;
-        case JSON::JsonValueType::Null:
-            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(L"(null)"));
-            return;
-        case JSON::JsonValueType::Number:
-            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(value.GetNumber()));
-            return;
-        case JSON::JsonValueType::Object:
-            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(L"(object)"));
-            return;
-        case JSON::JsonValueType::String:
-            std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(std::wstring(value.GetString())));
-            return;
-    }
-    std::vformat_to(std::back_inserter(out), L"{}", std::make_wformat_args(L"(unknown)"));
-}
-
-void Eval(const bool b)
-{
-
-}
-
-template<bool...b>
-void Blah()
-{
-    (Eval(b), ...);
-}
-
-template<typename...Args>
-void Blah3(Args&&...b) requires std::is_same_v<Args..., bool>
-{
-    (Eval(b), ...);
-}
-
-struct P
-{
-    
-};
-
-template<P...b>
-void Blah2()
-{
-    
 }
 
 JSON::IJsonValue GetValueByPath(JSON::JsonObject& root, const std::vector<std::wstring>& path)
@@ -154,8 +57,6 @@ JSON::IJsonValue GetValueByPath(JSON::JsonObject& root, const std::vector<std::w
 
 void Two() try
 {
-    Blah<false, true>();
-
     constexpr std::wstring_view json = LR"({"field1":{"innerField":1},"field2":{"innerField":2},"field/field":false})";
     JSON::JsonObject root = JSON::JsonObject::Parse(json.data());
 
@@ -167,9 +68,7 @@ void Two() try
     for (const Collections::IKeyValuePair& f : root)
     {
         std::wstring out = L"";
-        JSONValueToValue(f.Value(), out);
 
-        //JSONValueToValue<JsonValueType::Array>(f.Value());
         std::wcout << std::format(
             L"Name: {} -- Type: {} -- Value: {}\n", 
             std::wstring{ f.Key() },

@@ -132,6 +132,10 @@
     <ClCompile Include="json.ixx" />
     <ClCompile Include="json2.ixx" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="memcpy_shim.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="memcpy_shim.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

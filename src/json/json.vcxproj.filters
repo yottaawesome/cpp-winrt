@@ -21,5 +21,13 @@
     <ClCompile Include="testmodule.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="memcpy_shim.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="memcpy_shim.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
