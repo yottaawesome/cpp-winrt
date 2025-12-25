@@ -2,6 +2,8 @@
 import std;
 import testmodule;
 
+#pragma comment(lib, "runtimeobject.lib")
+
 // https://docs.microsoft.com/en-us/uwp/api/windows.data.json?view=winrt-22621
 std::wstring TypeToString(const JSON::JsonValueType& value)
 {

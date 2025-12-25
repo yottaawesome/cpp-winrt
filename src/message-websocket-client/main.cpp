@@ -1,3 +1,5 @@
+#pragma comment(lib, "runtimeobject.lib")
+
 // See https://learn.microsoft.com/en-us/windows/uwp/networking/websockets
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.foundation.collections.h>

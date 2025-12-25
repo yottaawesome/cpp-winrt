@@ -1,3 +1,5 @@
+#pragma comment(lib, "runtimeobject.lib")
+
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.foundation.collections.h>
 #include <winrt/windows.networking.sockets.h>

@@ -1,3 +1,5 @@
+#pragma comment(lib, "runtimeobject.lib")
+
 // https://learn.microsoft.com/en-us/windows/uwp/networking/httpclient
 #include <iostream>
 #include <stdexcept>

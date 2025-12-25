@@ -1,3 +1,5 @@
+#pragma comment(lib, "runtimeobject.lib")
+
 // See also: https://learn.microsoft.com/en-us/windows/uwp/networking/sockets#references-to-streamsockets-in-c-ppl-continuations
 // Run the stream-socket-server project first; 
 // this application will connect to that app's

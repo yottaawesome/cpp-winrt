@@ -1,4 +1,5 @@
 // Adapted from https://learn.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/get-started
+#pragma comment(lib, "runtimeobject.lib")
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
